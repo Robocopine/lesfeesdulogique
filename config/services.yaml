@@ -19,6 +19,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    # change the site language on navbar
+    # this service get _locale and transform site language via templatePath
+
+    App\Service\LanguageService:
+        arguments :
+            $templatePath: 'partials/_navBar.html.twig'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
