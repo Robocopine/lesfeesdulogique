@@ -25,7 +25,7 @@ services:
 
     App\Service\LanguageService:
         arguments :
-            $templatePath: 'partials/_navBar.html.twig'
+            $templatePath: 'app/partials/_navBar.html.twig'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

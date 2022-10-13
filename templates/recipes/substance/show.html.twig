@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Substance{% endblock %}
+
+{% block body %}
+    <h1>Substance</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ substance.id }}</td>
+            </tr>
+            <tr>
+                <th>NameFr</th>
+                <td>{{ substance.nameFr }}</td>
+            </tr>
+            <tr>
+                <th>NameNl</th>
+                <td>{{ substance.nameNl }}</td>
+            </tr>
+            <tr>
+                <th>NameEn</th>
+                <td>{{ substance.nameEn }}</td>
+            </tr>
+            <tr>
+                <th>NameDe</th>
+                <td>{{ substance.nameDe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_substance_index') }}">back to list</a>
+
+    <a href="{{ path('app_substance_edit', {'id': substance.id}) }}">edit</a>
+
+    {{ include('substance/_delete_form.html.twig') }}
+{% endblock %}

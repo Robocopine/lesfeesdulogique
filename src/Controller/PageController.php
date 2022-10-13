@@ -20,7 +20,8 @@ class PageController extends AbstractController
     {
         $lg = $language->getLanguage();
         $controller_name = $translator->trans("L'économie par l'écologie");
-        return $this->render('page/index.html.twig', [
+        return $this->render('app/index.html.twig', [
+            'lg' => $language,
             'controller_name' => $controller_name,
         ]);
     }

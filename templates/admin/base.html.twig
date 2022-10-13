@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Les fées du Logique, contact@lesfeesdulogique.com">
+        <meta name="keywords" content=""/>
+        <meta name="copyright" content="© Les fées du logique 2022"/>
+        <meta name="robots" content="noindex">
+        <meta name="webmaster" content="© Kitsweb"/>
+        <title>{% block title %}Administration - {% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('admin') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+            {{ encore_entry_script_tags('admin') }}
+        {% endblock %}
+    </head>
+    <body class="sb-nav-fixed">
+        {{ include("admin/partials/_topnavbar.html.twig") }}
+        {{ include("admin/partials/_sidebar.html.twig") }}
+        {% block body %}{% endblock %}
+        {{ include("admin/partials/_footer.html.twig") }}
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    </body>
+    
+</html>
+

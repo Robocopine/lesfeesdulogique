@@ -1,0 +1,115 @@
+{# templates/partials/_navBar.html.twig #}
+
+<!-- Navigation -->
+
+        {# if app.user %}
+          <li class="nav-item text-uppercase text-expanded dropdown px-lg-4 {% if route == "account_show" or route == "account_edit" or route == "account_message" or route == "friends" %}active{% endif %}">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" id="accountDropdownLink">
+              {% trans %}Compte{% endtrans %}
+            </a>
+            <div class="dropdown-menu  bg-faded dropdown-menu-right" aria-labelledby="accountDropdownLink">
+              <a href="{{ path('account_show') }}" class="dropdown-item">
+                <div class="d-inline" style="height:15px!important;">
+                  <img class="rounded-circle avatar-mini" alt="Avatar {{user.fullName}}" src="{{user.avatar}}"/>
+                </div>
+                &nbsp; {% trans %}Mon profil{% endtrans %}
+              </a>
+              <a href="{{ path('account_edit') }}" class="dropdown-item">
+                {% trans %}Modifier mon profil{% endtrans %}
+              </a>
+              <a href="{{ path('account_message') }}" class="dropdown-item">
+                {% trans %}Messagerie{% endtrans %}
+              </a>
+              <a href="{{ path('friends') }}" class="dropdown-item">
+                {% trans %}Mes contacts{% endtrans %}
+              </a>
+              {% if app.user %}
+                {% if "ROLE_ADMIN" in app.user.roles %}
+                  <div class="dropdown-divider"></div>
+                  <div id="app"></div>
+                {% endif %}
+              {% endif %}
+              <div class="dropdown-divider"></div>
+              <a href="{{ path('app_logout') }}" class="dropdown-item">
+                {% trans %}Déconnexion{% endtrans %}
+              </a>
+            </div>
+          </li>
+        {% else %}
+          <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{{ path('app_login') }}">
+              {% trans %}Connexion{% endtrans %}
+            </a>
+          </li>
+        {% endif #}
+
+
+
+
+<!-- /Navigation -->
+
+<nav class="navbar navbar-expand-lg bg-light" id="mainNav">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Les fées du logique</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('home') }}">
+            {% trans %}Accueil{% endtrans %}
+          </a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav d-flex">
+        {# LANGUAGE }
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{lg}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" 
+              {% if (lg == 'nl')  %}
+                href='{{ path(route, {'_locale' : 'fr'}) }}'>FR
+              {% elseif (lg == 'en') %}
+                href='{{ path(route, {'_locale' : 'fr'}) }}'>FR
+              {% elseif (lg == 'de') %}
+                href='{{ path(route, {'_locale' : 'nl'}) }}'>NL
+              {% else %}
+                href='{{ path(route, {'_locale' : 'nl'}) }}'>NL
+              {% endif %}
+            </a></li>
+            <li><a class="dropdown-item" 
+              {% if (lg == 'nl')  %}
+                href='{{ path(route, {'_locale' : 'en'}) }}'>EN
+              {% elseif (lg == 'en') %}
+                href='{{ path(route, {'_locale' : 'nl'}) }}'>NL
+              {% elseif (lg == 'de') %}
+                href='{{ path(route, {'_locale' : 'en'}) }}'>EN
+              {% else %}
+                href='{{ path(route, {'_locale' : 'en'}) }}'>EN
+              {% endif %}
+            </a></li>
+            <li><a class="dropdown-item" 
+              {% if (lg == 'nl')  %}
+                href='{{ path(route, {'_locale' : 'de'}) }}'>DE
+              {% elseif (lg == 'en') %}
+                href='{{ path(route, {'_locale' : 'de'}) }}'>DE
+              {% elseif (lg == 'de') %}
+                href='{{ path(route, {'_locale' : 'fr'}) }}'>FR
+              {% else %}
+                href='{{ path(route, {'_locale' : 'de'}) }}'>DE
+              {% endif %}
+            </a></li>
+          </ul>
+        </li>
+        { LANGUAGE #}
+      </ul>
+    </div>
+  </div>
+</nav>
