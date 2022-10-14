@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\SubstanceRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SubstanceRepository::class)]
-class Substance
+#[ORM\Entity(repositoryClass: RecipeRepository::class)]
+class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,7 +28,10 @@ class Substance
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nameDe = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
+    private Collection $ingredient;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $descriptionFr = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -40,12 +43,9 @@ class Substance
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptionDe = null;
 
-    #[ORM\OneToMany(mappedBy: 'substance', targetEntity: Ingredient::class, orphanRemoval: true)]
-    private Collection $ingredients;
-
     public function __construct()
     {
-        $this->ingredients = new ArrayCollection();
+        $this->ingredient = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +101,30 @@ class Substance
         return $this;
     }
 
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIngredient(): Collection
+    {
+        return $this->ingredient;
+    }
+
+    public function addIngredient(Ingredient $ingredient): self
+    {
+        if (!$this->ingredient->contains($ingredient)) {
+            $this->ingredient->add($ingredient);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): self
+    {
+        $this->ingredient->removeElement($ingredient);
+
+        return $this;
+    }
+
     public function getDescriptionFr(): ?string
     {
         return $this->descriptionFr;
@@ -148,36 +172,4 @@ class Substance
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Ingredient>
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients->add($ingredient);
-            $ingredient->setSubstance($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getSubstance() === $this) {
-                $ingredient->setSubstance(null);
-            }
-        }
-
-        return $this;
-    }
-
-
 }

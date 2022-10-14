@@ -42,15 +42,9 @@ class AdminRecipeBookController extends AbstractController
         ]);
     }
 
-    #[Route('/substance/{id}', name: 'substance_show', methods: ['GET'])]
-    public function show(Substance $substance): Response
-    {
-        return $this->render('admin/recipe-book/substance/show.html.twig', [
-            'substance' => $substance,
-        ]);
-    }
 
-    #[Route('/substance/{id}/modifier', name: 'substance_edit', methods: ['GET', 'POST'])]
+
+    #[Route('/substance/modifier/{id}', name: 'substance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Substance $substance, SubstanceRepository $substanceRepository): Response
     {
         $form = $this->createForm(SubstanceType::class, $substance);
@@ -59,12 +53,21 @@ class AdminRecipeBookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $substanceRepository->save($substance, true);
 
-            return $this->redirectToRoute('substance_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_recipe_book_substance_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/recipe-book/substance/edit.html.twig', [
             'substance' => $substance,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/substance/{id}/{lg}', name: 'substance_show', methods: ['GET'])]
+    public function show(Substance $substance, string $lg = 'fr'): Response
+    {
+        return $this->render('admin/recipe-book/substance/show.html.twig', [
+            'substance' => $substance,
+            'lg' => $lg
         ]);
     }
 
@@ -75,6 +78,6 @@ class AdminRecipeBookController extends AbstractController
             $substanceRepository->remove($substance, true);
         }
 
-        return $this->redirectToRoute('substance_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_recipe_book_substance_index', [], Response::HTTP_SEE_OTHER);
     }
 }

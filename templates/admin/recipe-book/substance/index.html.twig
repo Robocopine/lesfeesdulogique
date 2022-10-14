@@ -1,8 +1,11 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Substance index{% endblock %}
+{% block title %}{{ parent() }}Les composants{% endblock %}
 
 {% block body %}
+<div class="d-inline-block position-absolute end-0">
+    <a class=" btn btn-primary mx-4 mt-4" href="{{ path('admin_recipe_book_substance_new') }}">Nouveau</a>
+</div>
 <h1 class="mt-4 h2">Composants</h1>
 
 <nav aria-label="breadcrumb">
@@ -17,12 +20,13 @@
         <i class="fas fa-table me-1"></i>
         Les composants de nos recettes
     </div>
+    
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,19 +35,20 @@
                     <td>{{ substance.id }}</td>
                     <td>{{ substance.nameFr }}</td>
                     <td>
-                        <a href="{{ path('admin_recipe_book_substance_show', {'id': substance.id}) }}">show</a>
-                        <a href="{{ path('admin_recipe_book_substance_edit', {'id': substance.id}) }}">edit</a>
+                        <a href="{{ path('admin_recipe_book_substance_show', {'id': substance.id}) }}" class="btn btn-white text-dark"><i class="fa-solid fa-eye"></i></a>
+                        <a href="{{ path('admin_recipe_book_substance_edit', {'id': substance.id}) }}" class="btn btn-white text-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                        {{ include('admin/recipe-book/substance/_delete_form.html.twig', {'id': substance.id}) }}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">no records found</td>
+                    <td colspan="6">Aucun composant</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('admin_recipe_book_substance_new') }}">Create new</a>
+    
 </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>

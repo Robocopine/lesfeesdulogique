@@ -1,10 +1,10 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}New Substance{% endblock %}
+{% block title %}{{ parent() }}Nouveau composant{% endblock %}
 
 {% block body %}
 
-<h1 class="mt-4 h2">Composants</h1>
+<h1 class="mt-4 h2">Nouveau composant</h1>
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -20,8 +20,7 @@
         Créer une nouvelle substance
     </div>
     <div class="card-body">
-        {% set button_label = "Créer" %}
-        {{ include('admin/recipe-book/substance/_form.html.twig') }}
+        {{ include('admin/recipe-book/substance/_form.html.twig', {'button_label': 'Créer'}) }}
     </div>
 </div>
 

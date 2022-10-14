@@ -1,38 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
-{% block title %}Substance{% endblock %}
+{% block title %}{{ parent() }}Substance{% endblock %}
 
 {% block body %}
-    <h1>Substance</h1>
+<div class="d-inline-block position-absolute end-0">
+    <a class=" btn btn-primary mx-4 mt-4" href="{{ path('admin_recipe_book_substance_edit', {'id': substance.id}) }}">Modifier</a>
+</div>
+<h1 class="mt-4 h2">{{substance.nameFr}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ substance.id }}</td>
-            </tr>
-            <tr>
-                <th>NameFr</th>
-                <td>{{ substance.nameFr }}</td>
-            </tr>
-            <tr>
-                <th>NameNl</th>
-                <td>{{ substance.nameNl }}</td>
-            </tr>
-            <tr>
-                <th>NameEn</th>
-                <td>{{ substance.nameEn }}</td>
-            </tr>
-            <tr>
-                <th>NameDe</th>
-                <td>{{ substance.nameDe }}</td>
-            </tr>
-        </tbody>
-    </table>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_recipe_book_substance_index') }}">Composants</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{substance.nameFr}}</li>
+    </ol>
+</nav>
 
-    <a href="{{ path('app_substance_index') }}">back to list</a>
+<div class="card mb-4">
+    <div class="card-header pb-2">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <div class="nav-link text-dark"><i class="fas fa-table me-1"></i> Fiche technique : {{substance.nameFr}}</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_substance_show', {'id': substance.id, 'lg' : 'fr'}) }}">Français</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_substance_show', {'id': substance.id, 'lg' : 'nl'}) }}">Néerlandais</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_substance_show', {'id': substance.id, 'lg' : 'en'}) }}">Anglais</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_substance_show', {'id': substance.id, 'lg' : 'de'}) }}">Allemand</a> 
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>Photo</td>
+                    <th>{{ substance.id }}. 
+                        {{ lg == 'nl' ? substance.nameNl : lg == 'en' ? substance.nameEn : lg == 'de' ? substance.nameDe : substance.nameFr }}
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {{ lg == 'nl' ? substance.descriptionNl : lg == 'en' ? substance.descriptionEn : lg == 'de' ? substance.descriptionDe : substance.descriptionFr }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <a href="{{ path('app_substance_edit', {'id': substance.id}) }}">edit</a>
+<a href="{{ path('admin_recipe_book_substance_index') }}">Retour aux composants</a>
 
-    {{ include('substance/_delete_form.html.twig') }}
+
 {% endblock %}

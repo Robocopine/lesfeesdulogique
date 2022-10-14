@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<title>Recipe</title>
+
+{% block body %}
+    <h1>Recipe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recipe.id }}</td>
+            </tr>
+            <tr>
+                <th>NameFr</th>
+                <td>{{ recipe.nameFr }}</td>
+            </tr>
+            <tr>
+                <th>NameNl</th>
+                <td>{{ recipe.nameNl }}</td>
+            </tr>
+            <tr>
+                <th>NameEn</th>
+                <td>{{ recipe.nameEn }}</td>
+            </tr>
+            <tr>
+                <th>NameDe</th>
+                <td>{{ recipe.nameDe }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionFr</th>
+                <td>{{ recipe.descriptionFr }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionNl</th>
+                <td>{{ recipe.descriptionNl }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionEn</th>
+                <td>{{ recipe.descriptionEn }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionDe</th>
+                <td>{{ recipe.descriptionDe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recipe_index') }}">back to list</a>
+
+    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+
+    {{ include('recipe/_delete_form.html.twig') }}
+{% endblock %}
