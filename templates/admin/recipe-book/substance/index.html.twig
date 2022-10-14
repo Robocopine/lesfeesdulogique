@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Substance index{% endblock %}
+
+{% block body %}
+<h1 class="mt-4 h2">Composants</h1>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Composants</li>
+  </ol>
+</nav>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Les composants de nos recettes
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for substance in substances %}
+                <tr>
+                    <td>{{ substance.id }}</td>
+                    <td>{{ substance.nameFr }}</td>
+                    <td>
+                        <a href="{{ path('admin_recipe_book_substance_show', {'id': substance.id}) }}">show</a>
+                        <a href="{{ path('admin_recipe_book_substance_edit', {'id': substance.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_recipe_book_substance_new') }}">Create new</a>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+{% endblock %}

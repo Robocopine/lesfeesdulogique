@@ -16,9 +16,7 @@ $(document).ready(function() {
 });
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/admin.scss';
-import './js/demo/chart-area-demo.js';
-import './js/demo/chart-bar-demo.js';      
+import './styles/admin.scss'; 
 
 // start the Stimulus application
 import '../bootstrap';
