@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
+use App\Form\RecipeType;
 use App\Entity\Substance;
 use App\Form\SubstanceType;
 use App\Service\PaginationService;
+use App\Repository\RecipeRepository;
 use App\Repository\SubstanceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +19,13 @@ class AdminRecipeBookController extends AbstractController
 {
     # RECIPE
 
-    #[Route('/recettes', name: 'recipe_index', methods: ['GET'])]
-    public function indexRecipe(RecipeRepository $recipeRepository): Response
+    #[Route('/recettes/{page<\d+>?1}', name: 'recipe_index', methods: ['GET'])]
+    public function indexRecipe(PaginationService $pagination, $page): Response
     {
+        $pagination->setEntityClass(Recipe::class)
+            ->setPage($page);
         return $this->render('admin/recipe-book/recipe/index.html.twig', [
-            'recipes' => $recipeRepository->findAll(),
+            'pagination' => $pagination
         ]);
     }
     

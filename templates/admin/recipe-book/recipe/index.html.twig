@@ -1,49 +1,59 @@
-<!DOCTYPE html>
 
-<title>Recipe index</title>
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }}Les recettes{% endblock %}
 
 {% block body %}
-    <h1>Recipe index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NameFr</th>
-                <th>NameNl</th>
-                <th>NameEn</th>
-                <th>NameDe</th>
-                <th>DescriptionFr</th>
-                <th>DescriptionNl</th>
-                <th>DescriptionEn</th>
-                <th>DescriptionDe</th>
-                <th>actions</th>
-            </tr>
-        </thead>
+    <div class="d-inline-block position-absolute end-0">
+        <a class=" btn btn-primary mx-4 mt-4" href="{{ path('admin_recipe_book_recipe_new') }}">Nouveau</a>
+    </div>
+    <h1 class="mt-4 h2">Recettes</h1>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Recettes</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Nos recettes
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
         <tbody>
-        {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.nameFr }}</td>
-                <td>{{ recipe.nameNl }}</td>
-                <td>{{ recipe.nameEn }}</td>
-                <td>{{ recipe.nameDe }}</td>
-                <td>{{ recipe.descriptionFr }}</td>
-                <td>{{ recipe.descriptionNl }}</td>
-                <td>{{ recipe.descriptionEn }}</td>
-                <td>{{ recipe.descriptionDe }}</td>
-                <td>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for recipe in pagination.data %}
+                <tr>
+                    <td>{{ recipe.id }}</td>
+                    <td>{{ recipe.nameFr }}</td>
+                    <td>
+                        <a href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id}) }}" class="btn btn-white text-dark"><i class="fa-solid fa-eye"></i></a>
+                        <a href="{{ path('admin_recipe_book_recipe_edit', {'id': recipe.id}) }}" class="btn btn-white text-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                        {{ include('admin/recipe-book/partials/_delete.html.twig', {'entity': 'recipe' ,'id': recipe.id, 'name': recipe.nameFr }) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune recette</td>
+                </tr>
+            {% endfor %}
         </tbody>
+
     </table>
 
-    <a href="{{ path('app_recipe_new') }}">Create new</a>
+    <div class="mx-4">{{ pagination.display() }}</div>
+    
+</div>
+
 {% endblock %}

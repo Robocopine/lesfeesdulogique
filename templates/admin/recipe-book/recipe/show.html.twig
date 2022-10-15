@@ -1,54 +1,61 @@
-<!DOCTYPE html>
+{% extends 'admin/base.html.twig' %}
 
-<title>Recipe</title>
+{% block title %}{{ parent() }}Recette{% endblock %}
 
 {% block body %}
-    <h1>Recipe</h1>
+<div class="d-inline-block position-absolute end-0">
+    <a class=" btn btn-primary mx-4 mt-4" href="{{ path('admin_recipe_book_recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+</div>
+<h1 class="mt-4 h2">{{recipe.nameFr}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ recipe.id }}</td>
-            </tr>
-            <tr>
-                <th>NameFr</th>
-                <td>{{ recipe.nameFr }}</td>
-            </tr>
-            <tr>
-                <th>NameNl</th>
-                <td>{{ recipe.nameNl }}</td>
-            </tr>
-            <tr>
-                <th>NameEn</th>
-                <td>{{ recipe.nameEn }}</td>
-            </tr>
-            <tr>
-                <th>NameDe</th>
-                <td>{{ recipe.nameDe }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionFr</th>
-                <td>{{ recipe.descriptionFr }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionNl</th>
-                <td>{{ recipe.descriptionNl }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionEn</th>
-                <td>{{ recipe.descriptionEn }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionDe</th>
-                <td>{{ recipe.descriptionDe }}</td>
-            </tr>
-        </tbody>
-    </table>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_recipe_book_recipe_index') }}">Recettes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{recipe.nameFr}}</li>
+    </ol>
+</nav>
 
-    <a href="{{ path('app_recipe_index') }}">back to list</a>
+<div class="card mb-4">
+    <div class="card-header pb-2">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <div class="nav-link text-dark"><i class="fas fa-table me-1"></i> Fiche technique : {{recipe.nameFr}}</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id, 'lg' : 'fr'}) }}">Français</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id, 'lg' : 'nl'}) }}">Néerlandais</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id, 'lg' : 'en'}) }}">Anglais</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id, 'lg' : 'de'}) }}">Allemand</a> 
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>Photo</td>
+                    <th>{{ recipe.id }}. 
+                        {{ lg == 'nl' ? recipe.nameNl : lg == 'en' ? recipe.nameEn : lg == 'de' ? recipe.nameDe : recipe.nameFr }}
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {{ lg == 'nl' ? recipe.descriptionNl : lg == 'en' ? recipe.descriptionEn : lg == 'de' ? recipe.descriptionDe : recipe.descriptionFr }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+<a href="{{ path('admin_recipe_book_recipe_index') }}">Retour aux recettes</a>
 
-    {{ include('recipe/_delete_form.html.twig') }}
+
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="position-absolute end-0">{{ include('admin/recipe-book/substance/_delete_form.html.twig') }}</div>
+<div class="position-absolute end-0">{{ include('admin/recipe-book/partials/_delete.html.twig', {'entity': 'substance' ,'id': substance.id, 'name': substance.nameFr }) }}</div>
 <h1 class="mt-4 h2">Modifier "{{substance.nameFr}}"</h1>
 
 <nav aria-label="breadcrumb">

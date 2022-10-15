@@ -1,4 +1,0 @@
-<form class="d-inline-block" method="post" action="{{ path('admin_recipe_book_substance_delete', {'id': substance.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le composant \'\'{{substance.nameFr}}\'\'?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ substance.id) }}">
-    <button class="btn btn-white text-danger"><i class="fa-solid fa-trash"></i></button>
-</form>

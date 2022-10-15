@@ -1,13 +1,30 @@
-<!DOCTYPE html>
+{% extends 'admin/base.html.twig' %}
 
-<title>Edit Recipe</title>
+{% block title %}{{ parent() }}Modifier "{{recipe.nameFr}}"{% endblock %}
 
 {% block body %}
-    <h1>Edit Recipe</h1>
 
-    {{ include('admin/recipe-book/recipe/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="position-absolute end-0">{{ include('admin/recipe-book/partials/_delete.html.twig', {'entity': 'recipe' ,'id': recipe.id, 'name': recipe.nameFr }) }}</div>
+<h1 class="mt-4 h2">Modifier "{{recipe.nameFr}}"</h1>
 
-    <a href="{{ path('app_recipe_index') }}">back to list</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_recipe_book_recipe_index') }}">Recettes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modifier {{recipe.nameFr}}</li>
+    </ol>
+</nav>
 
-    {{ include('admin/recipe-book/recipe/_delete_form.html.twig') }}
+<div class="card my-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Créer une nouvelle recette
+    </div>
+    <div class="card-body">
+        {{ include('admin/recipe-book/recipe/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+</div>
+
+<a href="{{ path('admin_recipe_book_recipe_index') }}">Retour aux recettes</a>
+
 {% endblock %}
