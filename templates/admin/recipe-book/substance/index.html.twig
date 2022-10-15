@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for substance in substances %}
+            {% for substance in pagination.data %}
                 <tr>
                     <td>{{ substance.id }}</td>
                     <td>{{ substance.nameFr }}</td>
@@ -42,12 +42,13 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">Aucun composant</td>
+                    <td colspan="4">Aucun composant</td>
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
 
+    </table>
+    <div class="mx-4">{{ pagination.display() }}</div>
     
 </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
