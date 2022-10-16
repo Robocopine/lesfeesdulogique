@@ -28,9 +28,6 @@ class Recipe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nameDe = null;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
-    private Collection $ingredient;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descriptionFr = null;
 
@@ -42,6 +39,9 @@ class Recipe
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptionDe = null;
+
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Ingredient::class, cascade: ["persist", "remove"] )]
+    private Collection $ingredient;
 
     public function __construct()
     {
@@ -101,30 +101,6 @@ class Recipe
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ingredient>
-     */
-    public function getIngredient(): Collection
-    {
-        return $this->ingredient;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredient->contains($ingredient)) {
-            $this->ingredient->add($ingredient);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        $this->ingredient->removeElement($ingredient);
-
-        return $this;
-    }
-
     public function getDescriptionFr(): ?string
     {
         return $this->descriptionFr;
@@ -169,6 +145,36 @@ class Recipe
     public function setDescriptionDe(?string $descriptionDe): self
     {
         $this->descriptionDe = $descriptionDe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIngredient(): Collection
+    {
+        return $this->ingredient;
+    }
+
+    public function addIngredient(Ingredient $ingredient): self
+    {
+        if (!$this->ingredient->contains($ingredient)) {
+            $this->ingredient->add($ingredient);
+            $ingredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): self
+    {
+        if ($this->ingredient->removeElement($ingredient)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredient->getRecipe() === $this) {
+                $ingredient->setRecipe(null);
+            }
+        }
 
         return $this;
     }

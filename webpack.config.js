@@ -24,7 +24,7 @@ Encore
     .addEntry('admin', './assets/admin/admin.js')
 
     .copyFiles({
-        from: './assets/admin/js/demo',
+        from: './assets/admin/js',
         
         // optional target path, relative to the output dir
         to: 'js/[path][name].[ext]',

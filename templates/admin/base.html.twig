@@ -15,9 +15,9 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('admin') }}
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+        
         {{ encore_entry_script_tags('admin') }}
-       
+
     </head>
     <body class="sb-nav-fixed">
         {{ include("admin/partials/_topnavbar.html.twig") }}
@@ -33,7 +33,7 @@
         </div>
         {{ include("admin/partials/_footer.html.twig") }}
         
-        
+        {% block javascripts %}{% endblock %}
     </body>
     
 </html>

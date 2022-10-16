@@ -9,6 +9,7 @@ use App\Form\SubstanceType;
 use App\Service\PaginationService;
 use App\Repository\RecipeRepository;
 use App\Repository\SubstanceRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,13 +31,19 @@ class AdminRecipeBookController extends AbstractController
     }
     
     #[Route('/recette/nouveau', name: 'recipe_new', methods: ['GET', 'POST'])]
-    public function newRecipe(Request $request, RecipeRepository $recipeRepository): Response
+    public function newRecipe(Request $request,ManagerRegistry $doctrine, RecipeRepository $recipeRepository): Response
     {
+        $entityManager = $doctrine->getManager();
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach($recipe->getIngredient() as $ingredient) {
+                $ingredient->setRecipe($recipe);
+                $entityManager->persist($ingredient);  
+            }
+            $entityManager->flush();
             $recipeRepository->save($recipe, true);
 
             return $this->redirectToRoute('admin_recipe_book_recipe_index', [], Response::HTTP_SEE_OTHER);
@@ -49,12 +56,18 @@ class AdminRecipeBookController extends AbstractController
     }
 
     #[Route('/recette/modifier/{id}', name: 'recipe_edit', methods: ['GET', 'POST'])]
-    public function editRecipe(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
+    public function editRecipe(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach($recipe->getIngredient() as $ingredient) {
+                $ingredient->setRecipe($recipe);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ingredient);
+                $entityManager->flush();
+            }
             $recipeRepository->save($recipe, true);
 
             return $this->redirectToRoute('admin_recipe_book_recipe_index', [], Response::HTTP_SEE_OTHER);

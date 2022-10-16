@@ -40,13 +40,6 @@ class Substance
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptionDe = null;
 
-    #[ORM\OneToMany(mappedBy: 'substance', targetEntity: Ingredient::class, orphanRemoval: true)]
-    private Collection $ingredients;
-
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -149,35 +142,6 @@ class Substance
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ingredient>
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients->add($ingredient);
-            $ingredient->setSubstance($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getSubstance() === $this) {
-                $ingredient->setSubstance(null);
-            }
-        }
-
-        return $this;
-    }
 
 
 }
