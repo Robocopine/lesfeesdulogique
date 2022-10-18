@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }}Utilisateur : {{ user.email }}{% endblock %}
+
+{% block body %}   
+<div class="d-inline-block position-absolute end-0">
+    <a class=" btn btn-primary mx-4 mt-4" href="{{ path('admin_user_edit', {'id': user.id}) }}">Modifier</a>
+</div>
+<h1 class="mt-4 h2">{{user.email}}</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_user_index') }}">Utilisateurs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{user.email}}</li>
+    </ol>
+</nav>
+
+<div class="card mb-4">
+
+    <table class="card-body table table-bordered mb-0">
+        <tbody>
+            <tr>
+                <td>Avatar</td>
+                <td>
+                    <p class="fw-bold">Informations</p>
+                    <p>Nom : &emsp; </p>
+                    <p>Prénom : &emsp; </p>
+                    <p>Email : &emsp; {{ user.isVerified ? '<i class="fa-solid fa-circle-check text-success" title="Vérifié"></i>' : '<i class="fa-solid fa-circle-exclamation text-warning" title="Non vérifié"></i>' }} &nbsp; {{user.email}} </p>
+                    <p>Adresse : &emsp; </p>
+                    <p>Roles : &emsp;</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  
+</div>
+
+<a href="{{ path('admin_user_index') }}">Retour aux utilisateurs</a>
+
+
+{% endblock %}
+
+
+
+
+
+    

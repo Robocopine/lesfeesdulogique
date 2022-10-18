@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }}Modifier "{{user.email}}"{% endblock %}
+
+{% block body %}
+<div class="position-absolute end-0">{{ include('admin/user/partials/_delete_form.html.twig', {'id': user.id, 'name': user.email }) }}</div>
+<h1 class="mt-4 h2">Modifier "{{user.email}}"</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_user_index') }}">Utilisateurs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modifier {{user.email}}</li>
+    </ol>
+</nav>
+
+<div class="card my-4">
+    <div class="card-header">
+        <i class="fa-regular fa-file-lines"></i> &nbsp;
+        Modifier {{user.email}}
+    </div>
+    <div class="card-body">
+        {{ include('admin/user/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+</div>
+
+<a href="{{ path('admin_user_index') }}">Retour aux utilisateurs</a>
+
+{% endblock %}
+
+
