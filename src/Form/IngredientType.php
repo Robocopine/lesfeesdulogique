@@ -23,7 +23,7 @@ class IngredientType extends AbstractType
                 'label' => 'Composant',
                 'class' => Substance::class,
                 'choice_label' => 'nameFr',
-                'placeholder' => 'Supprimer',
+                'placeholder' => 'Choisissez un ingrédient',
                 'required' => false,
                 'attr' => ['class' => 'composant-path' ]
             ])

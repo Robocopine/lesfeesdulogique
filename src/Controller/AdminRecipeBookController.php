@@ -66,13 +66,11 @@ class AdminRecipeBookController extends AbstractController
             
             foreach($recipe->getIngredient() as $ingredient) {
                 
-                
                 $ingredient->setRecipe($recipe);
                 $entityManager->persist($ingredient);  
                 if($ingredient->getSubstance() == NULL){
                     $recipe->removeIngredient($ingredient);
                 }
-                
             }
             $entityManager->flush();
             $recipeRepository->save($recipe, true);
@@ -86,11 +84,12 @@ class AdminRecipeBookController extends AbstractController
         ]);
     }
 
-    #[Route('/recette/{id}', name: 'recipe_show', methods: ['GET'])]
-    public function showRecipe(Recipe $recipe): Response
+    #[Route('/recette/{id}/{lg}', name: 'recipe_show', methods: ['GET'])]
+    public function showRecipe(Recipe $recipe, string $lg = 'fr'): Response
     {
         return $this->render('admin/recipe-book/recipe/show.html.twig', [
             'recipe' => $recipe,
+            'lg' => $lg
         ]);
     }
 
@@ -102,18 +101,6 @@ class AdminRecipeBookController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_recipe_book_recipe_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    # INGREDIENT
-    
-    #[Route('/ingredient/{id}/{route}', name: 'ingredient_delete', methods: ['POST'])]
-    public function deleteIngredient(Request $request, Ingredient $ingredient, IngredientRepository $ingredientRepository, $route): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ingredient->getId(), $request->request->get('_token'))) {
-            $ingredientRepository->remove($ingredient, true);
-        }
-
-        return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
     }
 
     # SUBSTANCE
@@ -146,8 +133,6 @@ class AdminRecipeBookController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
 
     #[Route('/composant/modifier/{id}', name: 'substance_edit', methods: ['GET', 'POST'])]
     public function editSubstance(Request $request, Substance $substance, SubstanceRepository $substanceRepository): Response

@@ -20,7 +20,7 @@
     <div class="card-header pb-2">
         <ul class="nav nav-pills card-header-pills">
             <li class="nav-item">
-                <div class="nav-link text-dark"><i class="fas fa-table me-1"></i> Fiche technique : {{recipe.nameFr}}</div>
+                <div class="nav-link text-dark"><i class="fa-regular fa-file-lines"></i>&nbsp; Fiche technique : <b>{{recipe.nameFr}}</b></div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('admin_recipe_book_recipe_show', {'id': recipe.id, 'lg' : 'fr'}) }}">Français</a> 
@@ -36,23 +36,26 @@
             </li>
         </ul>
     </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>Photo</td>
-                    <th>{{ recipe.id }}. 
-                        {{ lg == 'nl' ? recipe.nameNl : lg == 'en' ? recipe.nameEn : lg == 'de' ? recipe.nameDe : recipe.nameFr }}
-                    </th>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        {{ lg == 'nl' ? recipe.descriptionNl : lg == 'en' ? recipe.descriptionEn : lg == 'de' ? recipe.descriptionDe : recipe.descriptionFr }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+    <table class="card-body table table-bordered mb-0">
+        <tbody>
+            <tr>
+                <td>Photo</td>
+                <td>
+                    <p class="fw-bold">Ingredients</p>
+                    {% for ingredient in recipe.ingredient %}
+                        <p>- &emsp; {{ingredient.quantity}} &nbsp; {{ingredient.substance.nameFr}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ lg == 'nl' ? recipe.descriptionNl : lg == 'en' ? recipe.descriptionEn : lg == 'de' ? recipe.descriptionDe : recipe.descriptionFr }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  
 </div>
 
 <a href="{{ path('admin_recipe_book_recipe_index') }}">Retour aux recettes</a>
