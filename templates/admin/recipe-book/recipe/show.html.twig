@@ -43,7 +43,7 @@
                 <td>Photo</td>
                 <td>
                     <p class="fw-bold">Ingredients</p>
-                    {% for ingredient in recipe.ingredient %}
+                    {% for ingredient in recipe.ingredients %}
                         <p>- &emsp; {{ingredient.quantity}} &nbsp; {{ingredient.substance.nameFr}}</p>
                     {% endfor %}
                 </td>

@@ -1,4 +1,4 @@
-{% block _recipe_ingredient_widget %}
+{% block _recipe_ingredients_widget %}
     {{ form_widget(form) }}
 
     <input type="hidden" id="widgets-counter" value="0">
@@ -11,11 +11,11 @@
     </div>
 {% endblock %}
 
-{% block _recipe_ingredient_entry_row %}
+{% block _recipe_ingredients_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block _recipe_ingredient_entry_widget %}
+{% block _recipe_ingredients_entry_widget %}
 
     <div class="form-group" id="block_{{id}}">
     {{ form_errors(form) }}

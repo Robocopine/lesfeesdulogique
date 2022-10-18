@@ -39,7 +39,7 @@ class AdminRecipeBookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach($recipe->getIngredient() as $ingredient) {
+            foreach($recipe->getIngredients() as $ingredient) {
                 $ingredient->setRecipe($recipe);
                 $entityManager->persist($ingredient);  
             }
@@ -64,7 +64,7 @@ class AdminRecipeBookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            foreach($recipe->getIngredient() as $ingredient) {
+            foreach($recipe->getIngredients() as $ingredient) {
                 
                 $ingredient->setRecipe($recipe);
                 $entityManager->persist($ingredient);  

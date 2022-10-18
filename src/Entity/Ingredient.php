@@ -23,7 +23,7 @@ class Ingredient
     #[ORM\JoinColumn(nullable: true)]
     private ?Substance $substance = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ingredient', cascade: ["persist", "remove"])]
+    #[ORM\ManyToOne(inversedBy: 'ingredients', cascade: ["persist", "remove"])]
     private ?Recipe $recipe = null;
 
     public function getId(): ?int

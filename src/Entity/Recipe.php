@@ -41,11 +41,11 @@ class Recipe
     private ?string $descriptionDe = null;
 
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Ingredient::class, cascade: ["persist", "remove"] )]
-    private Collection $ingredient;
+    private Collection $ingredients;
 
     public function __construct()
     {
-        $this->ingredient = new ArrayCollection();
+        $this->ingredients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,15 +152,15 @@ class Recipe
     /**
      * @return Collection<int, Ingredient>
      */
-    public function getIngredient(): Collection
+    public function getIngredients(): Collection
     {
-        return $this->ingredient;
+        return $this->ingredients;
     }
 
     public function addIngredient(Ingredient $ingredient): self
     {
-        if (!$this->ingredient->contains($ingredient)) {
-            $this->ingredient->add($ingredient);
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients->add($ingredient);
             $ingredient->setRecipe($this);
         }
 
@@ -169,7 +169,7 @@ class Recipe
 
     public function removeIngredient(Ingredient $ingredient): self
     {
-        if ($this->ingredient->removeElement($ingredient)) {
+        if ($this->ingredients->removeElement($ingredient)) {
             // set the owning side to null (unless already changed)
             if ($ingredient->getRecipe() === $this) {
                 $ingredient->setRecipe(null);

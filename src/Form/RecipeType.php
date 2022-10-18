@@ -26,7 +26,7 @@ class RecipeType extends AbstractType
             ->add('descriptionNl', TextareaType::class, ['required' => false, 'label' => 'Description (NL)', 'attr' => ['placeholder' => 'Entrez la description du composant en néerlandais' ]])
             ->add('descriptionEn', TextareaType::class, ['required' => false, 'label' => 'Description (EN)', 'attr' => ['placeholder' => 'Entrez la description du composant en anglais' ]])
             ->add('descriptionDe', TextareaType::class, ['required' => false, 'label' => 'Description (DE)', 'attr' => ['placeholder' => 'Entrez la description du composant en allemand' ]])
-            ->add('ingredient', CollectionType::class, [
+            ->add('ingredients', CollectionType::class, [
                 'label' => 'Ingrédients',
                 'entry_type' => IngredientType::class,
                 'allow_add' => true,
