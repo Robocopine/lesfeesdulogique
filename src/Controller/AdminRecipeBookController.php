@@ -56,18 +56,25 @@ class AdminRecipeBookController extends AbstractController
     }
 
     #[Route('/recette/modifier/{id}', name: 'recipe_edit', methods: ['GET', 'POST'])]
-    public function editRecipe(Request $request, Recipe $recipe, RecipeRepository $recipeRepository, ManagerRegistry $doctrine): Response
+    public function editRecipe(Request $request, Recipe $recipe, RecipeRepository $recipeRepository,  ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             foreach($recipe->getIngredient() as $ingredient) {
+                
+                
                 $ingredient->setRecipe($recipe);
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($ingredient);
-                $entityManager->flush();
+                $entityManager->persist($ingredient);  
+                if($ingredient->getSubstance() == NULL){
+                    $recipe->removeIngredient($ingredient);
+                }
+                
             }
+            $entityManager->flush();
             $recipeRepository->save($recipe, true);
 
             return $this->redirectToRoute('admin_recipe_book_recipe_index', [], Response::HTTP_SEE_OTHER);
@@ -96,7 +103,18 @@ class AdminRecipeBookController extends AbstractController
 
         return $this->redirectToRoute('admin_recipe_book_recipe_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    # INGREDIENT
     
+    #[Route('/ingredient/{id}/{route}', name: 'ingredient_delete', methods: ['POST'])]
+    public function deleteIngredient(Request $request, Ingredient $ingredient, IngredientRepository $ingredientRepository, $route): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ingredient->getId(), $request->request->get('_token'))) {
+            $ingredientRepository->remove($ingredient, true);
+        }
+
+        return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+    }
 
     # SUBSTANCE
 

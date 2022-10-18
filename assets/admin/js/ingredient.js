@@ -18,8 +18,10 @@ $('#add-ingredient').click(function(){
 
 function handleDeleteButtons() {
     $('button[data-action="delete"]').click(function(){
+        const $select = document.querySelector('.composant-path');
+        $select.value = null;
         const target = this.dataset.target;
-        $(target).remove();
+        $(target).addClass('d-none');
     });
 }
 

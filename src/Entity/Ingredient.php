@@ -16,11 +16,11 @@ class Ingredient
     private ?int $id = null;
 
 
-    #[ORM\Column(nullable: true)]
-    private ?float $quantity = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $quantity = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Substance $substance = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredient', cascade: ["persist", "remove"])]
@@ -31,12 +31,12 @@ class Ingredient
         return $this->id;
     }
 
-    public function getQuantity(): ?float
+    public function getQuantity(): ?string
     {
         return $this->quantity;
     }
 
-    public function setQuantity(?float $quantity): self
+    public function setQuantity(?string $quantity): self
     {
         $this->quantity = $quantity;
 

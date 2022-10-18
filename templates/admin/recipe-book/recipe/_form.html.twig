@@ -10,7 +10,6 @@
       <div class="accordion-body">
         <div class="mb-3"> {{ form_row(form.nameFr) }}</div>
         <div class="mb-3"> {{ form_row(form.descriptionFr) }}</div>
-        <div class="mb-3">{{ form_row(form.ingredient) }}</div>
       </div>
     </div>
   </div>
@@ -54,5 +53,6 @@
     </div>
   </div>
 </div>
-<div class="text-center mt-4"><button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button></div>
+<div class="mt-4 mx-4">{{ form_row(form.ingredient) }}</div>
+<div class="text-center mt-4 "><button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button></div>
 {{ form_end(form) }}

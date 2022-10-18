@@ -2,6 +2,8 @@
 
 {% block title %}{{ parent() }}Modifier "{{recipe.nameFr}}"{% endblock %}
 
+{% form_theme form 'admin/recipe-book/recipe/_collection.html.twig' %}
+
 {% block body %}
 
 <div class="position-absolute end-0">{{ include('admin/recipe-book/partials/_delete.html.twig', {'entity': 'recipe' ,'id': recipe.id, 'name': recipe.nameFr }) }}</div>
@@ -28,3 +30,9 @@
 <a href="{{ path('admin_recipe_book_recipe_index') }}">Retour aux recettes</a>
 
 {% endblock %}
+
+{% block javascripts %}
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{{ asset('build/js/ingredient.js') }}"></script>
+{% endblock %}
+
